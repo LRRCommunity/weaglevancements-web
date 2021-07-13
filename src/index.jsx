@@ -55,7 +55,7 @@ function Index() {
 
     return {
         oninit(vnode) {
-            Controller.loadAdvancements();
+			Controller.loadAdvancements();
             refresh();
 
             handle = setInterval(() => {

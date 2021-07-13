@@ -26,7 +26,9 @@ const Category = styled.div`
 `;
 
 const LevelWrapper = styled.div`
-  display: flex;
+  border-left: 2px inset #fff;
+  border-top: 2px inset #fff;
+  margin-left: 4em;
 `;
 
 const ProgressBack = styled.div`
@@ -53,7 +55,7 @@ function ProgressBar() {
     }
 }
 
-export function AdvancementGraph() {
+/* export function AdvancementGraph() {
     return {
         view() {
             const percent = Controller.getTotalPercentage();
@@ -72,4 +74,41 @@ export function AdvancementGraph() {
             </div>
         }
     }
+}
+*/
+export function AdvancementGraph() {
+    return {
+        view() {
+            const percent = Controller.getTotalPercentage();
+            return <div>
+                <Container>
+                    <ProgressBar percent={percent} />
+                    <p>The gang is currently {percent.toFixed(1)}% done</p>
+                </Container>
+				{DrawAdvancements(Model.advancementTree)}
+				{Model.chunkedAdvancements}
+            </div>
+        }
+    }
+}
+function DrawAdvancements(advancements) {
+	if (advancements.length > 0) {
+		let out = [];
+		advancements.forEach((adv) => {
+			if (!adv.parent && adv.display.background) {
+				out.push(<Category root={adv}>
+				<AdvancementIcon advancement={adv} progress={Controller.getProgress(adv)} />
+				{DrawAdvancements(adv.children)}
+			</Category>)
+			} else {
+				out.push(<LevelWrapper>
+				<AdvancementIcon advancement={adv} progress={Controller.getProgress(adv)} />
+				{DrawAdvancements(adv.children)}
+				</LevelWrapper>)
+			}
+		});
+		return <>
+			{out}
+			</>;
+	}
 }

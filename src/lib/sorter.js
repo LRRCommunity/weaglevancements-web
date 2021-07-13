@@ -46,3 +46,19 @@ export function chunkAdvancements(advancements) {
 
     return buckets;
 }
+export function makeAdvancementTree(advancements) {
+	let map = {}, roots = [], i;
+	advancements.forEach((val, idx) => {
+		map[val.id] = idx;
+		val.children = [];
+	});
+	advancements.forEach((val) => {
+		if (val.parent) {
+			// if (!advancements[map[val.parent]].children) advancements[map[val.parent]].children = [];
+			advancements[map[val.parent]].children.push(val);
+		} else {
+			roots.push(val);
+		}
+	});
+	return roots;
+}
