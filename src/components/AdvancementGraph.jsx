@@ -55,27 +55,6 @@ function ProgressBar() {
     }
 }
 
-/* export function AdvancementGraph() {
-    return {
-        view() {
-            const percent = Controller.getTotalPercentage();
-            const mapper = map(_, Model.chunkedAdvancements);
-
-            return <div>
-                <Container>
-                    <ProgressBar percent={percent} />
-                    <p>The gang is currently {percent.toFixed(1)}% done</p>
-                </Container>
-                {mapper(bucket => <Category root={bucket[0][0]}>
-                    {bucket.map(level => <LevelWrapper>
-                        {level.map(adv => <AdvancementIcon advancement={adv} progress={Controller.getProgress(adv)} />)}
-                    </LevelWrapper>)}
-                </Category>)}
-            </div>
-        }
-    }
-}
-*/
 export function AdvancementGraph() {
     return {
         view() {
