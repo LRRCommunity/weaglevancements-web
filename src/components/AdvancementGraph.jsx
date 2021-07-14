@@ -25,6 +25,11 @@ const Category = styled.div`
 
 const LevelWrapper = styled.div`
   margin-left: 2em;
+  position: relative;
+  
+  @media(max-width: 700px) {
+    margin-left: 0.3em;
+  }
 `;
 
 const ProgressBack = styled.div`

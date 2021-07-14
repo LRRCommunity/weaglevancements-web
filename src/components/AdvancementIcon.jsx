@@ -1,7 +1,7 @@
 import m from "mithril";
-import { styled } from "../lib/styled";
+import {styled} from "../lib/styled";
 
-import translations  from "../assets/translations.json";
+import translations from "../assets/translations.json";
 import Task from "../assets/sprites/task_incomplete.png";
 import TaskComplete from "../assets/sprites/task_complete.png";
 import Challenge from "../assets/sprites/challenge_incomplete.png";
@@ -39,7 +39,6 @@ function translate(text) {
 const Advancement = styled.div`
   font-family: sans-serif;
   display: inline-block;
-  flex: 1 1;
 `;
 
 const AdvancementFrame = styled.span`
