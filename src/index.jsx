@@ -1,5 +1,5 @@
 import m from "mithril";
-import { styled } from "./lib/styled";
+import {styled} from "./lib/styled";
 import {AdvancementGraph} from "./components/AdvancementGraph";
 import {css} from "@emotion/css";
 import {Controller} from "./lib/model";
@@ -29,16 +29,15 @@ function Index() {
     };
 
     function refresh() {
-        Controller.loadProgress()
-            .then(() => {
-                lastRefreshStatus.success = true;
-                lastRefreshStatus.error = null;
-                lastRefreshStatus.time = new Date();
-            }).catch(err => {
-                lastRefreshStatus.success = false;
-                lastRefreshStatus.error = err;
-                lastRefreshStatus.time = new Date();
-            });
+        Controller.loadProgress().then(() => {
+            lastRefreshStatus.success = true;
+            lastRefreshStatus.error = null;
+            lastRefreshStatus.time = new Date();
+        }).catch(err => {
+            lastRefreshStatus.success = false;
+            lastRefreshStatus.error = err;
+            lastRefreshStatus.time = new Date();
+        });
     }
 
     function statusLine() {
@@ -55,7 +54,7 @@ function Index() {
 
     return {
         oninit(vnode) {
-			Controller.loadAdvancements();
+            Controller.loadAdvancements();
             refresh();
 
             handle = setInterval(() => {

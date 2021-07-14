@@ -1,7 +1,5 @@
 import m from "mithril";
-import map from "lodash/fp/map";
-import _ from "lodash/fp/placeholder";
-import { styled } from "../lib/styled";
+import {styled} from "../lib/styled";
 import {AdvancementIcon} from "./AdvancementIcon";
 import {Controller, Model} from "../lib/model";
 
@@ -26,9 +24,7 @@ const Category = styled.div`
 `;
 
 const LevelWrapper = styled.div`
-  border-left: 2px inset #fff;
-  border-top: 2px inset #fff;
-  margin-left: 4em;
+  margin-left: 2em;
 `;
 
 const ProgressBack = styled.div`
@@ -49,7 +45,7 @@ function ProgressBar() {
     return {
         view(vnode) {
             return <ProgressBack>
-                <ProgressFront percent={vnode.attrs.percent} />
+                <ProgressFront percent={vnode.attrs.percent}/>
             </ProgressBack>
         }
     }
@@ -61,33 +57,27 @@ export function AdvancementGraph() {
             const percent = Controller.getTotalPercentage();
             return <div>
                 <Container>
-                    <ProgressBar percent={percent} />
+                    <ProgressBar percent={percent}/>
                     <p>The gang is currently {percent.toFixed(1)}% done</p>
                 </Container>
-				{DrawAdvancements(Model.advancementTree)}
-				{Model.chunkedAdvancements}
+                {drawAdvancements(Model.advancementTree)}
             </div>
         }
     }
 }
-function DrawAdvancements(advancements) {
-	if (advancements.length > 0) {
-		let out = [];
-		advancements.forEach((adv) => {
-			if (!adv.parent && adv.display.background) {
-				out.push(<Category root={adv}>
-				<AdvancementIcon advancement={adv} progress={Controller.getProgress(adv)} />
-				{DrawAdvancements(adv.children)}
-			</Category>)
-			} else {
-				out.push(<LevelWrapper>
-				<AdvancementIcon advancement={adv} progress={Controller.getProgress(adv)} />
-				{DrawAdvancements(adv.children)}
-				</LevelWrapper>)
-			}
-		});
-		return <>
-			{out}
-			</>;
-	}
+
+function drawAdvancements(advancementTree) {
+    return advancementTree.map(entry => {
+        if (!entry.item.parent) {
+            return <Category root={entry.item}>
+                <AdvancementIcon advancement={entry.item} progress={Controller.getProgress(entry.item)}/>
+                {drawAdvancements(entry.children)}
+            </Category>
+        } else {
+            return <LevelWrapper>
+                <AdvancementIcon advancement={entry.item} progress={Controller.getProgress(entry.item)}/>
+                {drawAdvancements(entry.children)}
+            </LevelWrapper>
+        }
+    });
 }

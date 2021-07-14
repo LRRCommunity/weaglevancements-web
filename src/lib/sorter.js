@@ -1,64 +1,15 @@
-function splitId(ident) {
-    const [_d, path] = ident.split(":");
-    const [category, id] = path.split("/");
+import map from "lodash/fp/map";
+import groupBy from "lodash/fp/groupBy";
 
-    return { category, id };
-}
+const groupByParent = groupBy(adv => adv.parent);
 
-// 1. Find all the root advancements
-// 2. Find all the advancements parented to the root
-// 3. Find all the advancements parented to those...
-// 4. Etc.
-//
-// So each round, just keep track of the previous IDs to compare against in the next round.
-//
-// This function is a horrible mess. But it works.
-export function chunkAdvancements(advancements) {
-    const buckets = {};
-    function getBucket(cat, i) {
-        if (!buckets.hasOwnProperty(cat)) {
-            buckets[cat] = [];
-        }
-        if (buckets[cat][i] == null) {
-            buckets[cat][i] = [];
-        }
-
-        return buckets[cat][i];
-    }
-
-    let lastRound = {};
-    for (let i = 0; true; i++) {
-        let nextRound = {};
-
-        advancements.forEach(adv => {
-            const { category } = splitId(adv.id);
-
-            if (lastRound[adv.parent] != null || (i === 0 && adv.parent == null)) {
-                getBucket(category, i).push(adv);
-                nextRound[adv.id] = adv;
-            }
-        });
-
-        if (Object.keys(nextRound).length === 0) break;
-
-        lastRound = nextRound;
-    }
-
-    return buckets;
-}
 export function makeAdvancementTree(advancements) {
-	let map = {}, roots = [], i;
-	advancements.forEach((val, idx) => {
-		map[val.id] = idx;
-		val.children = [];
-	});
-	advancements.forEach((val) => {
-		if (val.parent) {
-			// if (!advancements[map[val.parent]].children) advancements[map[val.parent]].children = [];
-			advancements[map[val.parent]].children.push(val);
-		} else {
-			roots.push(val);
-		}
-	});
-	return roots;
+    const byParent = groupByParent(advancements);
+
+    const treeify = map(adv => ({
+        item: adv,
+        children: treeify(byParent[adv.id])
+    }));
+
+    return treeify(byParent[undefined]); // love 2 index by undefined
 }

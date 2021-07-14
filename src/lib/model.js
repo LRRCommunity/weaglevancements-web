@@ -1,9 +1,9 @@
 import m from "mithril";
-import {chunkAdvancements, makeAdvancementTree} from "./sorter";
+import {makeAdvancementTree} from "./sorter";
 
 export const Model = {
     advancements: [],
-    chunkedAdvancements: {},
+    advancementTree: [],
     progress: {},
 };
 
@@ -15,8 +15,7 @@ export const Controller = {
             responseType: "json",
         }).then((res) => {
             Model.advancements = res.advancements;
-            Model.chunkedAdvancements = chunkAdvancements(res.advancements);
-			Model.advancementTree = makeAdvancementTree(res.advancements);
+            Model.advancementTree = makeAdvancementTree(res.advancements);
             return res.advancements;
         }).catch((err) => {
             console.error(err);
@@ -37,7 +36,7 @@ export const Controller = {
     },
 
     isLoaded() {
-		return Model.advancements.length > 0 && Object.keys(Model.progress).length > 0;
+        return Model.advancements.length > 0 && Object.keys(Model.progress).length > 0;
     },
 
     getProgress(advancement) {
