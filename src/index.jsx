@@ -70,7 +70,8 @@ function Index() {
             return <div>
                 <Container>
                     <Header>Mine O'Clock Advancement Run</Header>
-                    <p>by offbeatwitch! this is v0, it'll look nicer soon &#128516;</p>
+                    <p>by <a href="https://offbeatwit.ch">offbeatwitch</a>! v0.2 &#128516;</p>
+                    <p>contributors: <a href="https://github.com/Anaerin">Anaerin</a>!</p>
                     <StatusLine success={lastRefreshStatus.success}>{statusLine()}</StatusLine>
                 </Container>
                 {Controller.isLoaded() && <AdvancementGraph/>}
