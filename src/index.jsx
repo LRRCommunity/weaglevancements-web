@@ -77,7 +77,7 @@ function Layout() {
             return <div>
                 <Container>
                     <Header>Mine O'Clock Advancement Run</Header>
-                    <p>by <a href="https://offbeatwit.ch">offbeatwitch</a>! v0.2 &#128516;</p>
+                    <p>by <a href="https://offbeatwit.ch">offbeatwitch</a>! v0.3 &#128516;</p>
                     <p>contributors: <a href="https://github.com/Anaerin">Anaerin</a>!</p>
                     <StatusLine success={lastRefreshStatus.success}>{statusLine()}</StatusLine>
                 </Container>
