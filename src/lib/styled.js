@@ -25,8 +25,13 @@ function makeStyledElement(tag) {
     });
 }
 
-export const styled = new Proxy({}, {
+export const styled = new Proxy(function () {
+}, {
     get(target, p, receiver) {
         return makeStyledElement(p);
+    },
+
+    apply(target, thisArg, argArray) {
+        return makeStyledElement(argArray[0]);
     }
 });

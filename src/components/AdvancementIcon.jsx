@@ -1,4 +1,5 @@
 import m from "mithril";
+import {Link} from "mithril/route";
 import {styled} from "../lib/styled";
 
 import translations from "../assets/translations.json";
@@ -36,9 +37,14 @@ function translate(text) {
     return translations[text.translate];
 }
 
-const Advancement = styled.div`
+const Advancement = styled(Link)`
   font-family: sans-serif;
   display: inline-block;
+  color: inherit;
+  
+  &:visited {
+    color: inherit;
+  }
 `;
 
 const AdvancementFrame = styled.span`
@@ -76,9 +82,9 @@ export function AdvancementIcon() {
             const { advancement, progress } = vnode.attrs;
             const completed = progress != null ? progress.progress.done : false;
 
-            return <Advancement>
+            return <Advancement href={`/adv/${advancement.id}`}>
                 <AdvancementFrame type={advancement.display.frame} complete={completed}>
-                    <AdvancementImage src={iconToUrl(advancement.display.icon)} />
+                    <AdvancementImage src={iconToUrl(advancement.display.icon)}/>
                 </AdvancementFrame>
                 <DescriptionBlock>
                     <h2>{translate(advancement.display.title)}</h2>

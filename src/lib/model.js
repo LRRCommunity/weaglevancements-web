@@ -39,6 +39,10 @@ export const Controller = {
         return Model.advancements.length > 0 && Object.keys(Model.progress).length > 0;
     },
 
+    getAdvancementById(id) {
+        return Model.advancements.find(adv => adv.id === id);
+    },
+
     getProgress(advancement) {
         return Model.progress[advancement.id];
     },
@@ -50,10 +54,7 @@ export const Controller = {
         for (let k in Model.progress) {
             const tup = Model.progress[k];
 
-            if (tup.progress.done) {
-                done++;
-            }
-
+            done += tup.percentage;
             total++;
         }
 

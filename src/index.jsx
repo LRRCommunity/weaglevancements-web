@@ -1,5 +1,6 @@
 import m from "mithril";
 import {styled} from "./lib/styled";
+import {AdvancementPage} from "./pages/AdvancementDetails";
 import {AdvancementGraph} from "./components/AdvancementGraph";
 import {css} from "@emotion/css";
 import {Controller} from "./lib/model";
@@ -84,6 +85,8 @@ document.body.className = css`
   margin: 0;
 `;
 
+m.route.prefix = "";
 m.route(document.body, "/", {
     "/": Index,
+    "/adv/:advancement...": AdvancementPage,
 });
