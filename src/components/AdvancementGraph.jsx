@@ -15,7 +15,7 @@ const Container = styled.div`
   padding: 0 10px;
 `;
 
-const Category = styled.div`
+export const Category = styled.div`
   background-size: cover;
   background: url("${props => backgroundFromId(props.root.display.background)}") repeat rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;

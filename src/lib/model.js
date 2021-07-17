@@ -1,10 +1,14 @@
 import m from "mithril";
 import {makeAdvancementTree} from "./sorter";
+import keyBy from "lodash/fp/keyBy";
+
+const keyById = keyBy(adv => adv.id);
 
 export const Model = {
     advancements: [],
     advancementTree: [],
     progress: {},
+    _advancementById: {},
 };
 
 export const Controller = {
@@ -16,6 +20,7 @@ export const Controller = {
         }).then((res) => {
             Model.advancements = res.advancements;
             Model.advancementTree = makeAdvancementTree(res.advancements);
+            Model._advancementById = keyById(res.advancements);
             return res.advancements;
         }).catch((err) => {
             console.error(err);
@@ -40,11 +45,19 @@ export const Controller = {
     },
 
     getAdvancementById(id) {
-        return Model.advancements.find(adv => adv.id === id);
+        return Model._advancementById[id];
     },
 
     getProgress(advancement) {
         return Model.progress[advancement.id];
+    },
+
+    findRoot(advancement) {
+        if (advancement.parent) {
+            return this.findRoot(this.getAdvancementById(advancement.parent));
+        } else {
+            return advancement;
+        }
     },
 
     getTotalPercentage() {

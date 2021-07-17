@@ -1,7 +1,7 @@
 import m from "mithril";
 import {styled} from "./lib/styled";
+import {Index} from "./pages/Index";
 import {AdvancementPage} from "./pages/AdvancementDetails";
-import {AdvancementGraph} from "./components/AdvancementGraph";
 import {css} from "@emotion/css";
 import {Controller} from "./lib/model";
 
@@ -21,7 +21,7 @@ function formatTime(date) {
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 }
 
-function Index() {
+function Layout() {
     let handle = null;
     let lastRefreshStatus = {
         success: false,
@@ -75,8 +75,18 @@ function Index() {
                     <p>contributors: <a href="https://github.com/Anaerin">Anaerin</a>!</p>
                     <StatusLine success={lastRefreshStatus.success}>{statusLine()}</StatusLine>
                 </Container>
-                {Controller.isLoaded() && <AdvancementGraph/>}
+                {vnode.children}
             </div>
+        }
+    }
+}
+
+function Root(Component) {
+    return {
+        render(vnode) {
+            return <Layout>
+                <Component/>
+            </Layout>
         }
     }
 }
@@ -87,6 +97,6 @@ document.body.className = css`
 
 m.route.prefix = "";
 m.route(document.body, "/", {
-    "/": Index,
-    "/adv/:advancement...": AdvancementPage,
+    "/": Root(Index),
+    "/adv/:advancement...": Root(AdvancementPage),
 });
