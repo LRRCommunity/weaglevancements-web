@@ -2,6 +2,7 @@ import m from "mithril";
 import {styled} from "../lib/styled";
 import {AdvancementIcon} from "./AdvancementIcon";
 import {Controller, Model} from "../lib/model";
+import {ProgressBar} from "./ProgressBar";
 
 const BASE_URL = "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.17/assets/minecraft";
 
@@ -31,30 +32,6 @@ const LevelWrapper = styled.div`
     margin-left: 0.3em;
   }
 `;
-
-const ProgressBack = styled.div`
-  background: #a0a0a0;
-  width: 100%;
-  height: 20px;
-  position: relative;
-`;
-
-const ProgressFront = styled.div`
-  width: ${props => props.percent}%;
-  height: 100%;
-  position: absolute;
-  background: forestgreen;
-`;
-
-function ProgressBar() {
-    return {
-        view(vnode) {
-            return <ProgressBack>
-                <ProgressFront percent={vnode.attrs.percent}/>
-            </ProgressBack>
-        }
-    }
-}
 
 export function AdvancementGraph() {
     return {

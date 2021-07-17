@@ -4,6 +4,12 @@ import {Index} from "./pages/Index";
 import {AdvancementPage} from "./pages/AdvancementDetails";
 import {css} from "@emotion/css";
 import {Controller} from "./lib/model";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(customParseFormat);
+dayjs.extend(relativeTime);
 
 const Container = styled.div`
   margin: 0 10px;
