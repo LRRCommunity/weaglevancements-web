@@ -79,6 +79,7 @@ function Layout() {
                     <Header>Mine O'Clock Advancement Run</Header>
                     <p>by <a href="https://offbeatwit.ch">offbeatwitch</a>! v0.3 &#128516;</p>
                     <p>contributors: <a href="https://github.com/Anaerin">Anaerin</a>!</p>
+                    <p>source code: <a href="https://github.com/LRRCommunity/weaglevancements-web">https://github.com/LRRCommunity/weaglevancements-web</a></p>
                     <StatusLine success={lastRefreshStatus.success}>{statusLine()}</StatusLine>
                 </Container>
                 {vnode.children}
